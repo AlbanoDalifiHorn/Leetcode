@@ -1,0 +1,23 @@
+class Solution:
+    def pivotArray(self, nums: List[int], pivot: int) -> List[int]:
+        h = nums.copy()
+        h1 = []
+        pi = []
+        h2 = []
+        result = []
+        for i in range(len(nums)):
+            if nums[i] == pivot:
+                pi.append(nums[i])
+                h.remove(pivot)
+        for i in range(len(h)):
+            if h[i] < pivot:
+                h1.append(h[i])
+            else:
+                h2.append(h[i])
+        for i in range(len(h1)):
+            result.append(h1[i])
+        for i in range(len(pi)):
+            result.append(pi[i])
+        for i in range(len(h2)):
+            result.append(h2[i])
+        return result
