@@ -1,0 +1,23 @@
+class Solution:
+    def checkPowersOfThree(self, n: int) -> bool:
+        def tobin(n):
+            if n == 0:
+                return "0"
+            if n == 1:
+                return "1"
+            if n == 2:
+                return "2"
+
+            return tobin(n//3) + str(n % 3)  
+             
+        a = tobin(n)
+        a_rev = a[::-1]
+        total = 0
+        for i in range(len(a_rev)):
+            if a_rev[i] == '1':
+                total += 3 ** i
+
+        return total == n
+
+# Tip, their is a much faster way to solve it, just look if the number has a 2 in the ternary representation, if yes its False
+# But still both approaches having a O(log(n)) time complexity
