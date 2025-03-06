@@ -24,7 +24,7 @@ class Solution:
 '''
 Idea:
 create a Interval to have every number which can be in the grid
-now we gonna create a dictonary to get the keys(numbers) and their values(apperances)
+now we gonna create a dictonary to get the keys(numbers) and their values(frequencies)
 after that we gonna search for the duplicate and the last step is looking up for the missing key
 that whole process is in O(n^2)
 '''
