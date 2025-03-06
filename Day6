@@ -1,0 +1,34 @@
+class Solution:
+    def findMissingAndRepeatedValues(self, grid: List[List[int]]) -> List[int]:
+        res = []
+        interval = []
+        m = defaultdict(int)
+        
+        for i in range(1, len(grid) ** 2 + 1):
+            interval.append(i)
+            
+        for i in range(len(grid)):
+            for j in range(len(grid[i])):
+                m[grid[i][j]] += 1
+                
+        for key, val in m.items():
+            if val == 2:
+                res.append(key)
+                
+        for i in interval:
+            if i not in m.keys():
+                res.append(i)
+                
+        return res
+
+'''
+Idea:
+create a Interval to have every number which can be in the grid
+now we gonna create a dictonary to get the keys(numbers) and their values(apperances)
+after that we gonna search for the duplicate and the last step is looking up for the missing key
+that whole process is in O(n^2)
+'''
+
+
+
+
