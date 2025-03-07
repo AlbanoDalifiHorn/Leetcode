@@ -1,0 +1,77 @@
+import math
+from collections import defaultdict
+from typing import List
+
+class Solution:
+    def closestPrimes(left: int, right: int) -> List[int]:
+        prime = [True for i in range(right + 1)]
+        p = 2
+        while p * p <= right:
+            if prime[p] and prime[p]:
+                for i in range(p * p, right + 1, p):
+                    prime[i] = False
+            p += 1
+        primes = [i for i in range(left, right+1) if prime[i]]
+        if left == 1:
+            for p in range(2, right + 1):
+                if prime[p]:
+                    primes.append(p)
+        else:
+            for p in range(left, right + 1):
+                if prime[p]:
+                    primes.append(p)
+        if len(primes) < 2:
+            return [-1,-1]
+        result = []
+        for i in range(len(primes) - 1):
+            if len(result) == 0:
+                result = [abs(primes[i] - primes[i + 1]), [primes[i], primes[i + 1]]]
+            if abs(primes[i] - primes[i + 1]) < result[0]:
+                result = [abs(primes[i] - primes[i + 1]), [primes[i], primes[i + 1]]]
+            elif abs(primes[i] - primes[i + 1]) == result[0]:
+                if primes[i] < result[1][0]:
+                    result = [abs(primes[i] - primes[i + 1]), [primes[i], primes[i + 1]]]
+        return result[1]
+        # A short explanation because it does look a bit messy
+        # First of all I'm using the Sieve of Eratosthenes algorithm to get every prime number in a given intervall
+        # Because the first prime number is 2, we have to check if left > 2 or left == 1
+        # Next we have to check if the list of prime numbers is less than 2 to safe some compuation time
+        # Last step is to create or final list:
+        # if our final list is empty we obviously can't compare anything so we have to add the first pair with the distance
+        # last two conditions just checks if current distance is less or equal or final distance and replace it
+
+        '''
+        def isPrime(n):
+            if n < 2:
+                return False
+            i = 2
+            while i * i <= n:
+                if n % i == 0:
+                    return False
+                i += 1
+            return True
+
+        intervall = [i for i in range(left, right+1) if isPrime(i)]
+        if len(intervall) < 2:
+            return [-1,-1]
+
+        result = []
+        for i in range(len(intervall) - 1):
+            if len(result) == 0:
+                result = [abs(intervall[i] - intervall[i + 1]), [intervall[i], intervall[i + 1]]]
+            if abs(intervall[i] - intervall[i+1]) < result[0]:
+                result = [abs(intervall[i] - intervall[i + 1]), [intervall[i], intervall[i + 1]]]
+            elif abs(intervall[i] - intervall[i+1]) == result[0]:
+                if intervall[i] < result[1][0]:
+                    result = [abs(intervall[i] - intervall[i + 1]), [intervall[i], intervall[i + 1]]]
+        return result[1]
+
+#        m = defaultdict()
+#       for i in range(len(intervall) - 1):
+#           m[(intervall[i], intervall[i+1])] = abs(intervall[i+1] - intervall[i])
+#       return list(min(m.keys(), key=lambda k: (m[k], k[0])))
+Both implementations causing a Time Limit Exceeded after reading the Tip following approach is using the Sieve of Eratosthenes algorithm
+Time Complexity is: O(n * log(log(n)))
+Old approaches had a Time Complexity of: O(n * sqrt(n))
+'''
+
