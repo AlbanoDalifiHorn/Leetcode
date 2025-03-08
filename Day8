@@ -1,0 +1,13 @@
+class Solution:
+    def minimumRecolors(blocks: str, k: int) -> int:
+        white = "W"
+        storage = []
+        for i in range(len(blocks)):
+            if i + k <= len(blocks):
+                storage.append(blocks[i:i+k].count(white))
+        return min(storage)
+    # We use window slicing to always get the subarray in the length of k
+    # then we use a storage array to safe any frequencies of white blocks
+    # now we have every single possible subarray in length k and knowing the frequencies
+    # so we can simply return the smallest number in storage, short representation:
+    # "WBBWWBBWBW" storage[0] = 3, because the subarray looks like this: "WBBWWBB" storage[1] = 3, because it looks like: "BBWWBBW" and so on
