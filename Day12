@@ -1,0 +1,12 @@
+class Solution:
+    def maximumCount(self, nums: List[int]) -> int:
+        resMax = 0
+        resMin = 0
+        for i in range(len(nums)):
+            if nums[i] > 0:
+                resMax += 1
+            elif nums[i] < 0:
+                resMin += 1
+        return max(resMax, resMin)
+
+# It's possible to solve it in O(log(n)), because we know the array is sorted, but O(n) is working aswell thats why I stick to my solution :)  
