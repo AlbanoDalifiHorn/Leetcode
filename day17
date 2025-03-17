@@ -1,0 +1,21 @@
+class Solution:
+    def divideArray(nums: List[int]) -> bool:
+        dic = defaultdict(int)
+        counter = 0
+        n = len(nums) // 2
+        for i in range(len(nums)):
+            if nums[i] in dic:
+                dic[nums[i]] += 1
+            else:
+                dic[nums[i]] = 1
+        for val in dic.values():
+            if val % 2 == 0:
+                counter += val // 2
+        return counter == n
+
+'''
+Idea: we gonna create a dic to save all values to the keys, after that we are gonna look how many pairs we can build based on the frequency of the value and if counter == n -> True else False
+much easier is to use the following approach: 
+counter=collections.Counter(nums)
+it automatically creates a dic with all keys and values, so its much less code
+'''
