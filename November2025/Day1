@@ -1,0 +1,40 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode modifiedList(int[] nums, ListNode head) {
+        // create a dummy to go through the ListNode without manipulate head
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode tail = dummy;
+
+        // create a set, so we can access the element in O(1)
+        Set<Integer> set = new HashSet<>(); 
+
+        // adding every element of nums into the set 
+        for (int num : nums) set.add(num);
+
+        /*
+        idea:
+        check if tail.next is in set, if it is we do skip to tail.next.next as an example
+        [1,2,3,4,5]
+        tail -> dummy(-1), tail.next -> 1
+        as we know 1 ∈ set we gonna skip tail.next -> 1 so new ListNode is:
+        tail -> -1, tail.next -> 2 we reapeat till we have:
+        tail -> -1, tail.next -> 4 now tail -> 4 and tail.next -> 5 because 4 is not in set
+        */
+
+        while (tail != null && tail.next != null) {
+            if (set.contains(tail.next.val)) tail.next = tail.next.next;
+            else tail = tail.next;
+        }
+        return dummy.next;
+    }
+}
