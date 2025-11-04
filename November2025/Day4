@@ -1,0 +1,47 @@
+/*
+    Approach: maxHeap, HashMap and Sliding Window
+
+    Idea:
+        1. For each subarray of length k, count element frequencies using HashMap
+        2. Use MaxHeap to sort by frequency (then by value if tied)
+        3. Take top x elements and calculate sum = element * frequency
+        4. Store result for each subarray
+*/
+
+public class Solution {
+    public int[] findXSum(int[] nums, int k, int x) {
+        int n = nums.length;
+        int[] res = new int[n - k + 1];
+
+        //add occurrences into the map
+        for (int i = 0; i <= n - k; i++) {
+            Map<Integer, Integer> map = new HashMap<>();
+            for (int j = i; j < i + k; j++) {
+                map.put(nums[j], map.getOrDefault(nums[j], 0) + 1);
+            }
+            // create a maxHeap for int[]
+            PriorityQueue<int[]> maxHeap = new PriorityQueue<>((a, b) -> {
+                if (a[1] != b[1]) return b[1] - a[1];
+                return b[0] - a[0];
+            });
+
+            // add the key and value into a new int[] so that maxHeap is offer([key,value])
+            for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                maxHeap.offer(new int[] {entry.getKey(), entry.getValue()});
+            }
+            
+            // as long head isn't empty and count < x, we add key * value to sum
+            int sum = 0;
+            int count = 0;
+            while (!maxHeap.isEmpty() && count < x) {
+                int[] element = maxHeap.poll();
+                sum += element[0] * element[1];
+                count++;
+            }
+            
+            res[i] = sum;
+        }
+        
+        return res;
+    }
+}
