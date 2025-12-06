@@ -1,0 +1,16 @@
+class Solution {
+    public int totalWaviness(int num1, int num2) {
+        int res = 0;
+
+        // start at 100 because we can skip first 99 digits
+        for (int i = Math.max(100, num1); i <= num2; i++) {
+            String s = String.valueOf(i);
+            for (int j = 1; j < s.length() - 1; j ++) {
+                // skip first and last digit cause it cannot be a peak or valley
+                if (s.charAt(j) > s.charAt(j - 1) && s.charAt(j) > s.charAt(j + 1)) res++;
+                if (s.charAt(j) < s.charAt(j - 1) && s.charAt(j) < s.charAt(j + 1)) res++;
+            }
+        }
+        return res;
+    }
+}
