@@ -1,0 +1,27 @@
+class Solution {
+    public long maxPoints(int[] technique1, int[] technique2, int k) {
+        int n = technique1.length;
+        PriorityQueue<int[]> maxHeap = new PriorityQueue<>((a,b) -> b[0] - a[0]);
+        for (int i = 0; i < n; i++) {
+            int distance = technique1[i] - technique2[i];
+            maxHeap.offer(new int[] {distance, i});
+        }
+
+        while (!maxHeap.isEmpty()) {
+            int[] arr = maxHeap.poll();
+            int distance = arr[0];
+            int i = arr[1];
+
+            if (k > 0) {
+                technique2[i] = technique1[i];
+                k--;
+            }
+            else {
+                if (technique2[i] > technique1[i]) break;
+                technique2[i] = technique1[i];
+            }
+        }
+        long sum = Arrays.stream(technique2).asLongStream().sum();
+        return sum;
+    }
+}
