@@ -1,0 +1,21 @@
+class Solution {
+    public int minimumFlips(int n) {
+        StringBuilder res = new StringBuilder("");
+
+        while (n > 0) {
+            res.append(Integer.toString(n % 2));
+            n /= 2;
+        }
+        
+        String res_copy = res.toString();
+        String helper = res.reverse().toString();
+
+        int count = 0;
+        
+        for (int i = 0; i < res_copy.length(); i++) {
+            if (res_copy.charAt(i) != helper.charAt(i)) count++;
+        }
+        
+        return count;
+    }
+}
