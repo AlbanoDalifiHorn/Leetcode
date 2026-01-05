@@ -1,0 +1,28 @@
+class Solution {
+    public int sumFourDivisors(int[] nums) {
+        int sum = 0; 
+        int n = nums.length; 
+        // create list for every number with has 4 divisors
+        List<Integer> list = new ArrayList<>();
+        // create a list to get both indexes
+        List<List<Integer>> index = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            int div = 2;
+
+            List<Integer> helper = new ArrayList<>();
+            for (int j = 2; j <= nums[i] / 2; j++) {
+                if (div > 4) break;
+                if (nums[i] % j == 0) { div++; helper.add(j); }
+            }
+            if (div == 4) { list.add(nums[i]); index.add(helper); }
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            int a = list.get(i);
+            int b = index.get(i).get(0), c = index.get(i).get(1);
+            sum += 1 + a + b + c;
+        }
+        return sum;
+    }
+}

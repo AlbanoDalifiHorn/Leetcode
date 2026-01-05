@@ -1,0 +1,15 @@
+class Solution {
+    public int numOfWays(int n) {
+        int mod = (int) Math.pow(10,9) + 7;
+        long aba = 6;
+        long abc = 6;
+
+        for (int i = 0; i < n - 1; i++) {
+            long c = (3 * aba + 2 * abc) % mod;
+            long d = (2 * aba + 2 * abc) % mod;
+            aba = c;
+            abc = d;
+        }
+        return (int) (aba + abc) % mod;
+    }
+}

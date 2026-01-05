@@ -1,0 +1,10 @@
+class Solution {
+    public int repeatedNTimes(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        
+        //just look for a duplicate element, so if set.contains(num) we know it has to be our element
+        for (int num : nums) if(!set.add(num)) return num;
+        
+        return -1;
+    }
+}
