@@ -1,0 +1,47 @@
+/**\
+ * Definition for a binary tree node.\
+ * public class TreeNode \{\
+ *     int val;\
+ *     TreeNode left;\
+ *     TreeNode right;\
+ *     TreeNode() \{\}\
+ *     TreeNode(int val) \{ this.val = val; \}\
+ *     TreeNode(int val, TreeNode left, TreeNode right) \{\
+ *         this.val = val;\
+ *         this.left = left;\
+ *         this.right = right;\
+ *     \}\
+ * \}\
+ */\
+\
+class Solution \{\
+    private long maxSum = 0;\
+    private long totalSum = 0;\
+\
+    public int maxProduct(TreeNode root) \{\
+        maxSum = 0;\
+        int MOD = (int) Math.pow(10,9) + 7;\
+        totalSum = calcSum(root);\
+\
+        dfs(root);\
+\
+        return (int) (maxSum % MOD);\
+    \}\
+\
+    private long calcSum(TreeNode root) \{\
+        if (root == null) return 0;\
+        return root.val + calcSum(root.left) + calcSum(root.right);\
+    \}\
+\
+    private long dfs(TreeNode root) \{\
+        if (root == null) return 0; \
+\
+        long leftSum = dfs(root.left);\
+        long rightSum = dfs(root.right);\
+        long subTreeSum = leftSum + rightSum + root.val;\
+\
+        maxSum = Math.max((totalSum - subTreeSum) * subTreeSum, maxSum);\
+\
+        return subTreeSum;\
+    \}\
+\}}
